@@ -1,0 +1,316 @@
+:root {
+  --green: #01865d;
+  --green-dark: #134032;
+  --pink: #ffcbe4;
+  --pink-soft: #fff0f7;
+  --ink: #21242a;
+  --ink-soft: #5a5e6d;
+  --cream: #fdfaf6;
+  --card: #ffffff;
+  --radius: 18px;
+  --shadow: 0 6px 24px rgba(19, 64, 50, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Nunito", -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: url("img/cover.jpg") center 35% / cover no-repeat, var(--green-dark);
+}
+
+.hero-overlay {
+  background: linear-gradient(180deg, rgba(19, 64, 50, 0.55) 0%, rgba(19, 64, 50, 0.82) 100%);
+  padding: 44px 24px 36px;
+  text-align: center;
+}
+
+.hero-kicker {
+  margin: 0 0 6px;
+  color: var(--pink);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 40px;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.hero-sub {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ---------- Layout ---------- */
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+}
+
+.screen { display: none; }
+.screen.active { display: block; animation: fadeUp 0.35s ease both; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.question {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 28px;
+  line-height: 1.25;
+  text-align: center;
+  margin: 4px 0 24px;
+  color: var(--green-dark);
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  font: 700 15px "Nunito", sans-serif;
+  padding: 6px 10px 6px 0;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+/* ---------- Staff cards ---------- */
+.staff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.staff-card {
+  background: var(--card);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 10px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+  font-family: inherit;
+}
+
+.staff-card:active { transform: scale(0.97); }
+.staff-card:hover { border-color: var(--pink); }
+
+.staff-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--pink);
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.staff-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--green-dark);
+}
+
+.staff-title {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+/* ---------- Drinks ---------- */
+.drink-section { margin-bottom: 22px; }
+
+.drink-group-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 10px 4px;
+}
+
+.drink-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drink-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: var(--card);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 18px;
+  font: 700 17px "Nunito", sans-serif;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.drink-btn:active { transform: scale(0.98); }
+.drink-btn:hover { border-color: var(--green); }
+
+.drink-emoji { font-size: 26px; line-height: 1; }
+
+/* ---------- Confirm ---------- */
+.summary-card {
+  background: var(--pink-soft);
+  border: 2px solid var(--pink);
+  border-radius: var(--radius);
+  text-align: center;
+  padding: 26px 18px;
+  margin-bottom: 22px;
+}
+
+.summary-emoji { font-size: 54px; }
+
+.summary-drink {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 26px;
+  color: var(--green-dark);
+  margin-top: 8px;
+}
+
+.summary-tech {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.name-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--green-dark);
+  margin: 0 0 8px 4px;
+}
+
+.name-label span {
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.name-input {
+  width: 100%;
+  border: 2px solid #e3e0da;
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px 16px;
+  font: 600 17px "Nunito", sans-serif;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: var(--green);
+}
+
+.cta {
+  display: block;
+  width: 100%;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 17px;
+  font: 800 18px "Nunito", sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(1, 134, 93, 0.35);
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.cta:active { transform: scale(0.98); }
+.cta:disabled { background: #9bbfb2; box-shadow: none; cursor: wait; }
+
+.cta.ghost {
+  background: transparent;
+  color: var(--green);
+  border: 2px solid var(--green);
+  box-shadow: none;
+  margin-top: 8px;
+}
+
+.send-error {
+  margin-top: 14px;
+  background: #fff4f4;
+  border: 2px solid #ffb3b3;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #8c2f2f;
+  text-align: center;
+}
+
+/* ---------- Done ---------- */
+#screen-done { text-align: center; padding-top: 12px; }
+
+.done-emoji {
+  font-size: 74px;
+  animation: pop 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+
+@keyframes pop {
+  from { transform: scale(0.3); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.done-text {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin: 0 0 26px;
+}
+
+/* ---------- Footer ---------- */
+.foot {
+  text-align: center;
+  padding: 0 24px 34px;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.foot p { margin: 4px 0; }
+
+.foot-brand {
+  color: var(--green);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 11.5px;
+}
+
+@media (min-width: 700px) {
+  .hero-title { font-size: 52px; }
+  .hero-overlay { padding: 64px 24px 56px; }
+}

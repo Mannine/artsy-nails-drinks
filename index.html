@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artsy Nails · Free Drink Bar</title>
+  <meta name="description" content="Order your complimentary drink while you get your nails done at Artsy Nails, Pensacola FL.">
+  <meta name="theme-color" content="#134032">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-overlay">
+      <p class="hero-kicker">Artsy Nails · Pensacola</p>
+      <h1 class="hero-title">Complimentary<br>Drink Bar</h1>
+      <p class="hero-sub">Free drinks for our manicure &amp; pedicure guests 💅</p>
+    </div>
+  </header>
+
+  <main id="app">
+
+    <!-- Step 1: pick your nail tech -->
+    <section class="screen active" id="screen-staff">
+      <h2 class="question">Who is working on<br>your nails today?</h2>
+      <div class="staff-grid" id="staff-grid"></div>
+    </section>
+
+    <!-- Step 2: pick your drink -->
+    <section class="screen" id="screen-drinks">
+      <button class="back-btn" data-back="screen-staff" type="button">‹ Back</button>
+      <h2 class="question" id="drinks-heading">Lovely! Now pick<br>your free drink</h2>
+      <div class="drink-section">
+        <h3 class="drink-group-title">❄️ Cold Drinks</h3>
+        <div class="drink-list" id="cold-drinks"></div>
+      </div>
+      <div class="drink-section">
+        <h3 class="drink-group-title">☕ Hot Drinks</h3>
+        <div class="drink-list" id="hot-drinks"></div>
+      </div>
+    </section>
+
+    <!-- Step 3: confirm -->
+    <section class="screen" id="screen-confirm">
+      <button class="back-btn" data-back="screen-drinks" type="button">‹ Back</button>
+      <h2 class="question">Confirm your order</h2>
+      <div class="summary-card">
+        <div class="summary-emoji" id="summary-emoji">🥂</div>
+        <div class="summary-drink" id="summary-drink">Champagne</div>
+        <div class="summary-tech" id="summary-tech">while Natalia does your nails</div>
+      </div>
+      <label class="name-label" for="customer-name">Your first name <span>(so we bring it to the right chair)</span></label>
+      <input type="text" id="customer-name" class="name-input" placeholder="e.g. Jessica" autocomplete="given-name" maxlength="40">
+      <button class="cta" id="submit-order" type="button">Order My Drink</button>
+      <p class="send-error" id="send-error" hidden></p>
+    </section>
+
+    <!-- Step 4: done -->
+    <section class="screen" id="screen-done">
+      <div class="done-emoji" id="done-emoji">🥂</div>
+      <h2 class="question" id="done-title">Cheers!</h2>
+      <p class="done-text" id="done-text">Your drink is on its way. Sit back, relax, and enjoy your appointment.</p>
+      <button class="cta ghost" id="order-again" type="button">Order another drink</button>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <p>Alcoholic beverages are for guests 21+ only. Please enjoy responsibly.</p>
+    <p class="foot-brand">Artsy Nails · Pensacola, FL</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
