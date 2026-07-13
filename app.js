@@ -24,6 +24,7 @@ const DRINKS = {
     { name: "Coke Zero",            emoji: "🥤" },
     { name: "Red Wine",             emoji: "🍷" },
     { name: "White Wine (chilled)", emoji: "🍇" },
+    { name: "Water",                emoji: "💧" },
     { name: "Sparkling Water",      emoji: "🫧" },
     { name: "Champagne",            emoji: "🥂" },
   ],
