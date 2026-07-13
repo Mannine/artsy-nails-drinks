@@ -29,12 +29,14 @@ const DRINKS = {
   ],
   "Hot": [
     { name: "Chai Latte",    emoji: "🍵" },
-    { name: "Black Coffee",  emoji: "☕" },
+    { name: "Black Coffee",  emoji: "☕", sugar: true },
+    { name: "Hot Latte",     emoji: "🥛", sugar: true },
     { name: "Caramel Latte", emoji: "🍮" },
   ],
 };
 
-const order = { tech: null, drink: null, temp: null, emoji: null };
+// sugar is null for drinks without the option, otherwise 0-4 teaspoons
+const order = { tech: null, drink: null, temp: null, emoji: null, sugar: null };
 let resetTimer = null;
 
 function show(screenId) {
@@ -62,6 +64,23 @@ STAFF.forEach(person => {
   staffGrid.appendChild(card);
 });
 
+// ---------- Sugar picker (drinks flagged with sugar: true) ----------
+const sugarBlock = document.getElementById("sugar-block");
+const sugarOptions = document.getElementById("sugar-options");
+[0, 1, 2, 3, 4].forEach(n => {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "sugar-btn";
+  btn.textContent = n === 0 ? "None" : n;
+  btn.addEventListener("click", () => selectSugar(n));
+  sugarOptions.appendChild(btn);
+});
+
+function selectSugar(n) {
+  order.sugar = n;
+  [...sugarOptions.children].forEach((b, i) => b.classList.toggle("selected", i === n));
+}
+
 // ---------- Step 2: drinks ----------
 function buildDrinkList(containerId, temp) {
   const container = document.getElementById(containerId);
@@ -78,6 +97,13 @@ function buildDrinkList(containerId, temp) {
       document.getElementById("summary-drink").textContent = drink.name;
       document.getElementById("summary-tech").textContent =
         `while ${order.tech} does your nails`;
+      if (drink.sugar) {
+        sugarBlock.hidden = false;
+        selectSugar(0);
+      } else {
+        sugarBlock.hidden = true;
+        order.sugar = null;
+      }
       document.getElementById("send-error").hidden = true;
       show("screen-confirm");
     });
@@ -95,22 +121,23 @@ document.querySelectorAll(".back-btn").forEach(btn => {
 // ---------- Step 3: submit ----------
 const submitBtn = document.getElementById("submit-order");
 submitBtn.addEventListener("click", async () => {
-  const name = document.getElementById("customer-name").value.trim();
   const errorBox = document.getElementById("send-error");
   errorBox.hidden = true;
   submitBtn.disabled = true;
   submitBtn.textContent = "Sending…";
 
   const payload = {
-    _subject: `🍹 Drink order: ${order.drink} — ${order.tech}'s client${name ? ` (${name})` : ""}`,
+    _subject: `🍹 Drink order: ${order.drink} — ${order.tech}'s client`,
     _template: "table",
     _captcha: "false",
     "Drink": `${order.emoji} ${order.drink}`,
     "Hot / Cold": order.temp,
     "Nail Tech": order.tech,
-    "Customer": name || "(no name given)",
     "Ordered At": new Date().toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" }),
   };
+  if (order.sugar !== null) {
+    payload["Sugar"] = order.sugar === 0 ? "No sugar" : `${order.sugar} tsp`;
+  }
 
   let ok = false;
   try {
@@ -130,9 +157,10 @@ submitBtn.addEventListener("click", async () => {
 
   if (ok) {
     document.getElementById("done-emoji").textContent = order.emoji;
-    document.getElementById("done-title").textContent = name ? `Cheers, ${name}!` : "Cheers!";
+    document.getElementById("done-title").textContent = "Cheers!";
+    const sugarNote = order.sugar ? ` with ${order.sugar} tsp of sugar` : "";
     document.getElementById("done-text").textContent =
-      `Your ${order.drink.toLowerCase()} is on its way. Sit back, relax, and enjoy your appointment.`;
+      `Your ${order.drink.toLowerCase()}${sugarNote} is on its way. Sit back, relax, and enjoy your appointment.`;
     show("screen-done");
     clearTimeout(resetTimer);
     resetTimer = setTimeout(resetApp, RESET_AFTER_SECONDS * 1000);
@@ -148,8 +176,7 @@ document.getElementById("order-again").addEventListener("click", resetApp);
 
 function resetApp() {
   clearTimeout(resetTimer);
-  order.tech = order.drink = order.temp = order.emoji = null;
-  document.getElementById("customer-name").value = "";
+  order.tech = order.drink = order.temp = order.emoji = order.sugar = null;
   document.getElementById("send-error").hidden = true;
   show("screen-staff");
 }

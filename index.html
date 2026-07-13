@@ -52,8 +52,10 @@
         <div class="summary-drink" id="summary-drink">Champagne</div>
         <div class="summary-tech" id="summary-tech">while Natalia does your nails</div>
       </div>
-      <label class="name-label" for="customer-name">Your first name <span>(so we bring it to the right chair)</span></label>
-      <input type="text" id="customer-name" class="name-input" placeholder="e.g. Jessica" autocomplete="given-name" maxlength="40">
+      <div class="sugar-block" id="sugar-block" hidden>
+        <p class="sugar-label">How many teaspoons of sugar?</p>
+        <div class="sugar-options" id="sugar-options"></div>
+      </div>
       <button class="cta" id="submit-order" type="button">Order My Drink</button>
       <p class="send-error" id="send-error" hidden></p>
     </section>
