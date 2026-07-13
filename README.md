@@ -11,10 +11,9 @@ pick a drink, and the salon gets an email with the order.
 1. Guest scans the QR sign ([qr-sign.html](qr-sign.html) — open it and hit Print).
 2. Picks who's doing their nails: Natalia, Amalia, Anna, or Iasmym.
 3. Picks a cold or hot drink (some drinks ask how many tsp of sugar).
-4. The order goes out two ways at once — the order counts as sent if either works:
-   - **Email** via [formsubmit.co](https://formsubmit.co) (free, no account) with drink,
-     hot/cold, sugar, nail tech, and time.
-   - **Instant push notification** via [ntfy.sh](https://ntfy.sh) (free, no account).
+4. The order arrives as an **instant push notification** via [ntfy.sh](https://ntfy.sh)
+   (free, no account). Email notifications via [formsubmit.co](https://formsubmit.co)
+   are built in but currently switched off — see `NOTIFY_EMAIL` below.
 
 ## Getting order notifications on a phone or PC
 
@@ -37,9 +36,10 @@ re-subscribe on each device.
 
 Everything configurable lives at the top of [app.js](app.js):
 
-- **`NOTIFY_EMAIL`** — where order emails go. ⚠️ The first order sent to a new address
-  triggers a one-time "Activate" email from formsubmit.co — click it once and all
-  future orders arrive normally.
+- **`NOTIFY_EMAIL`** — where order emails go. Currently `""` = email notifications off;
+  set an address to turn them on. ⚠️ The first order sent to a new address triggers a
+  one-time "Activate" email from formsubmit.co — click it once and all future orders
+  arrive normally.
 - **`NTFY_TOPIC`** — the ntfy.sh topic that phone/PC push notifications publish to.
 - **`STAFF`** — names, titles, and photos (photos live in `img/`).
 - **`DRINKS`** — the cold and hot menus. Add/remove lines to change the menu.

@@ -1,8 +1,9 @@
 // ======================= CONFIG =======================
-// Change this to the salon's email address to receive drink orders.
-// The first order sent to a new address triggers a one-time activation
-// email from formsubmit.co — click "Activate" in it and orders flow.
-const NOTIFY_EMAIL = "mattmbusiness@gmail.com";
+// Email notifications are OFF (empty string). To turn them back on, set
+// this to an address, e.g. "salon@example.com". The first order sent to
+// a new address triggers a one-time activation email from formsubmit.co
+// — click "Activate" in it and orders flow.
+const NOTIFY_EMAIL = "";
 
 // Instant phone/PC push via https://ntfy.sh — free, no account.
 // Subscribe to this topic in the ntfy app (phone) or at
@@ -146,16 +147,17 @@ submitBtn.addEventListener("click", async () => {
     payload["Sugar"] = order.sugar === 0 ? "No sugar" : `${order.sugar} tsp`;
   }
 
-  const sendEmail = fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Accept": "application/json" },
-    body: JSON.stringify(payload),
-  })
-    .then(async res => {
-      const data = await res.json().catch(() => ({}));
-      return res.ok && String(data.success) !== "false";
+  const sendEmail = !NOTIFY_EMAIL ? Promise.resolve(false) :
+    fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload),
     })
-    .catch(() => false);
+      .then(async res => {
+        const data = await res.json().catch(() => ({}));
+        return res.ok && String(data.success) !== "false";
+      })
+      .catch(() => false);
 
   // ntfy push. Header values can't hold emoji, so those go in the body.
   const pushSugar = order.sugar ? ` (${order.sugar} tsp sugar)` : "";
