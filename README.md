@@ -4,7 +4,7 @@ A tiny mobile web app that lets manicure/pedicure guests at Artsy Nails (Pensaco
 order their free drink from their phone. Guests scan a QR code, pick their nail tech,
 pick a drink, and the salon gets an email with the order.
 
-**Live site:** https://mannine.github.io/artsy-drinks/
+**Live site:** https://mannine.github.io/artsy-nails-drinks/
 
 ## How it works
 
