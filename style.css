@@ -1,14 +1,15 @@
 :root {
-  --green: #01865d;
-  --green-dark: #134032;
-  --pink: #ffcbe4;
-  --pink-soft: #fff0f7;
-  --ink: #21242a;
-  --ink-soft: #5a5e6d;
-  --cream: #fdfaf6;
+  --gold: #c9a24b;        /* borders, accents */
+  --gold-deep: #8f6e2a;   /* small-caps labels on light backgrounds */
+  --gold-bright: #e3c878; /* gold on dark backgrounds */
+  --black: #1c1b17;       /* headings, hero, buttons */
+  --ink: #26241e;
+  --ink-soft: #6e6759;
+  --beige: #f5efe4;       /* page background */
+  --beige-card: #fbf7ee;  /* summary card */
   --card: #ffffff;
   --radius: 18px;
-  --shadow: 0 6px 24px rgba(19, 64, 50, 0.10);
+  --shadow: 0 6px 24px rgba(43, 36, 21, 0.10);
 }
 
 * { box-sizing: border-box; }
@@ -16,7 +17,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--cream);
+  background: var(--beige);
   color: var(--ink);
   font-family: "Nunito", -apple-system, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,18 +25,18 @@ html, body {
 
 /* ---------- Hero ---------- */
 .hero {
-  background: url("img/cover.jpg") center 35% / cover no-repeat, var(--green-dark);
+  background: url("img/cover.jpg") center 35% / cover no-repeat, var(--black);
 }
 
 .hero-overlay {
-  background: linear-gradient(180deg, rgba(19, 64, 50, 0.55) 0%, rgba(19, 64, 50, 0.82) 100%);
+  background: linear-gradient(180deg, rgba(20, 18, 14, 0.55) 0%, rgba(20, 18, 14, 0.85) 100%);
   padding: 44px 24px 36px;
   text-align: center;
 }
 
 .hero-kicker {
   margin: 0 0 6px;
-  color: var(--pink);
+  color: var(--gold-bright);
   font-weight: 800;
   font-size: 13px;
   letter-spacing: 3px;
@@ -78,7 +79,7 @@ html, body {
   line-height: 1.25;
   text-align: center;
   margin: 4px 0 24px;
-  color: var(--green-dark);
+  color: var(--black);
 }
 
 .back-btn {
@@ -111,14 +112,14 @@ html, body {
 }
 
 .staff-card:active { transform: scale(0.97); }
-.staff-card:hover { border-color: var(--pink); }
+.staff-card:hover { border-color: var(--gold); }
 
 .staff-photo {
   width: 96px;
   height: 96px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--pink);
+  border: 3px solid var(--gold);
   display: block;
   margin: 0 auto 10px;
 }
@@ -126,7 +127,7 @@ html, body {
 .staff-name {
   font-size: 18px;
   font-weight: 800;
-  color: var(--green-dark);
+  color: var(--black);
 }
 
 .staff-title {
@@ -135,7 +136,7 @@ html, body {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--gold-deep);
 }
 
 /* ---------- Drinks ---------- */
@@ -174,14 +175,14 @@ html, body {
 }
 
 .drink-btn:active { transform: scale(0.98); }
-.drink-btn:hover { border-color: var(--green); }
+.drink-btn:hover { border-color: var(--gold); }
 
 .drink-emoji { font-size: 26px; line-height: 1; }
 
 /* ---------- Confirm ---------- */
 .summary-card {
-  background: var(--pink-soft);
-  border: 2px solid var(--pink);
+  background: var(--beige-card);
+  border: 2px solid var(--gold);
   border-radius: var(--radius);
   text-align: center;
   padding: 26px 18px;
@@ -193,7 +194,7 @@ html, body {
 .summary-drink {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 26px;
-  color: var(--green-dark);
+  color: var(--black);
   margin-top: 8px;
 }
 
@@ -208,7 +209,7 @@ html, body {
   display: block;
   font-size: 15px;
   font-weight: 800;
-  color: var(--green-dark);
+  color: var(--black);
   margin: 0 0 8px 4px;
 }
 
@@ -219,7 +220,7 @@ html, body {
 
 .name-input {
   width: 100%;
-  border: 2px solid #e3e0da;
+  border: 2px solid #e5dec9;
   border-radius: 14px;
   background: #fff;
   padding: 14px 16px;
@@ -230,30 +231,30 @@ html, body {
 
 .name-input:focus {
   outline: none;
-  border-color: var(--green);
+  border-color: var(--gold);
 }
 
 .cta {
   display: block;
   width: 100%;
-  background: var(--green);
-  color: #fff;
+  background: var(--black);
+  color: var(--gold-bright);
   border: none;
   border-radius: 999px;
   padding: 17px;
   font: 800 18px "Nunito", sans-serif;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(1, 134, 93, 0.35);
+  box-shadow: 0 8px 20px rgba(28, 27, 23, 0.30);
   transition: transform 0.12s ease, background 0.12s ease;
 }
 
 .cta:active { transform: scale(0.98); }
-.cta:disabled { background: #9bbfb2; box-shadow: none; cursor: wait; }
+.cta:disabled { background: #a9a294; color: #fff; box-shadow: none; cursor: wait; }
 
 .cta.ghost {
   background: transparent;
-  color: var(--green);
-  border: 2px solid var(--green);
+  color: var(--gold-deep);
+  border: 2px solid var(--gold);
   box-shadow: none;
   margin-top: 8px;
 }
@@ -303,7 +304,7 @@ html, body {
 .foot p { margin: 4px 0; }
 
 .foot-brand {
-  color: var(--green);
+  color: var(--gold-deep);
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
