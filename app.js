@@ -4,6 +4,12 @@
 // email from formsubmit.co — click "Activate" in it and orders flow.
 const NOTIFY_EMAIL = "mattmbusiness@gmail.com";
 
+// Instant phone/PC push via https://ntfy.sh — free, no account.
+// Subscribe to this topic in the ntfy app (phone) or at
+// https://ntfy.sh/app (PC) to get a notification for every order.
+// The topic name is the only "password" — keep it unguessable.
+const NTFY_TOPIC = "artsy-nails-orders-505ba454";
+
 // After a successful order, return to the start screen automatically
 // (handy if the page is ever left open on a salon tablet).
 const RESET_AFTER_SECONDS = 90;
@@ -140,18 +146,30 @@ submitBtn.addEventListener("click", async () => {
     payload["Sugar"] = order.sugar === 0 ? "No sugar" : `${order.sugar} tsp`;
   }
 
-  let ok = false;
-  try {
-    const res = await fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json().catch(() => ({}));
-    ok = res.ok && String(data.success) !== "false";
-  } catch (e) {
-    ok = false;
-  }
+  const sendEmail = fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(payload),
+  })
+    .then(async res => {
+      const data = await res.json().catch(() => ({}));
+      return res.ok && String(data.success) !== "false";
+    })
+    .catch(() => false);
+
+  // ntfy push. Header values can't hold emoji, so those go in the body.
+  const pushSugar = order.sugar ? ` (${order.sugar} tsp sugar)` : "";
+  const sendPush = fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+    method: "POST",
+    headers: { "Title": `Drink order for ${order.tech}'s client`, "Priority": "high", "Tags": "cocktail" },
+    body: `${order.emoji} ${order.drink}${pushSugar} — bring to ${order.tech}'s chair`,
+  })
+    .then(res => res.ok)
+    .catch(() => false);
+
+  // The order counts as sent if either channel got through.
+  const [emailOk, pushOk] = await Promise.all([sendEmail, sendPush]);
+  const ok = emailOk || pushOk;
 
   submitBtn.disabled = false;
   submitBtn.textContent = "Order My Drink";
