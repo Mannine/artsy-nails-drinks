@@ -18,7 +18,7 @@ const STAFF = [
 
 const DRINKS = {
   "Cold": [
-    { name: "Iced Coffee",          emoji: "🧋" },
+    { name: "Iced Coffee",          emoji: "🧋", sugar: true },
     { name: "Iced Caramel Latte",   emoji: "🍯" },
     { name: "Iced Latte",           emoji: "🥛" },
     { name: "Coke Zero",            emoji: "🥤" },
