@@ -25,26 +25,27 @@ const STAFF = [
 
 const DRINKS = {
   "Cold": [
-    { name: "Iced Coffee",          emoji: "🧋", sugar: true },
-    { name: "Iced Caramel Latte",   emoji: "🍯" },
-    { name: "Iced Latte",           emoji: "🥛" },
-    { name: "Coke Zero",            emoji: "🥤" },
-    { name: "Red Wine",             emoji: "🍷" },
-    { name: "White Wine (chilled)", emoji: "🍇" },
-    { name: "Water",                emoji: "💧" },
-    { name: "Sparkling Water",      emoji: "🫧" },
-    { name: "Champagne",            emoji: "🥂" },
+    { name: "Iced Coffee", sugar: true },
+    { name: "Iced Caramel Latte" },
+    { name: "Iced Latte" },
+    { name: "Strawberry Matcha" },
+    { name: "Coke Zero" },
+    { name: "Red Wine" },
+    { name: "White Wine (chilled)" },
+    { name: "Water" },
+    { name: "Sparkling Water" },
+    { name: "Champagne" },
   ],
   "Hot": [
-    { name: "Chai Latte",    emoji: "🍵" },
-    { name: "Black Coffee",  emoji: "☕", sugar: true },
-    { name: "Hot Latte",     emoji: "🥛", sugar: true },
-    { name: "Caramel Latte", emoji: "🍮" },
+    { name: "Chai Latte" },
+    { name: "Black Coffee", sugar: true },
+    { name: "Hot Latte", sugar: true },
+    { name: "Caramel Latte" },
   ],
 };
 
 // sugar is null for drinks without the option, otherwise 0-4 teaspoons
-const order = { tech: null, drink: null, temp: null, emoji: null, sugar: null };
+const order = { tech: null, drink: null, temp: null, sugar: null };
 let resetTimer = null;
 
 function show(screenId) {
@@ -96,12 +97,10 @@ function buildDrinkList(containerId, temp) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "drink-btn";
-    btn.innerHTML = `<span class="drink-emoji">${drink.emoji}</span><span>${drink.name}</span>`;
+    btn.innerHTML = `<span class="drink-marker drink-marker--${temp.toLowerCase()}" aria-hidden="true"></span><span>${drink.name}</span>`;
     btn.addEventListener("click", () => {
       order.drink = drink.name;
       order.temp = temp;
-      order.emoji = drink.emoji;
-      document.getElementById("summary-emoji").textContent = drink.emoji;
       document.getElementById("summary-drink").textContent = drink.name;
       document.getElementById("summary-tech").textContent =
         `while ${order.tech} does your nails`;
@@ -135,10 +134,10 @@ submitBtn.addEventListener("click", async () => {
   submitBtn.textContent = "Sending…";
 
   const payload = {
-    _subject: `🍹 Drink order: ${order.drink} — ${order.tech}'s client`,
+    _subject: `Drink order: ${order.drink} — ${order.tech}'s client`,
     _template: "table",
     _captcha: "false",
-    "Drink": `${order.emoji} ${order.drink}`,
+    "Drink": order.drink,
     "Hot / Cold": order.temp,
     "Nail Tech": order.tech,
     "Ordered At": new Date().toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" }),
@@ -159,12 +158,12 @@ submitBtn.addEventListener("click", async () => {
       })
       .catch(() => false);
 
-  // ntfy push. Header values can't hold emoji, so those go in the body.
+  // Send the order to the salon's push-notification topic.
   const pushSugar = order.sugar ? ` (${order.sugar} tsp sugar)` : "";
   const sendPush = fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
     method: "POST",
-    headers: { "Title": `Drink order for ${order.tech}'s client`, "Priority": "high", "Tags": "cocktail" },
-    body: `${order.emoji} ${order.drink}${pushSugar} — bring to ${order.tech}'s chair`,
+    headers: { "Title": `Drink order for ${order.tech}'s client`, "Priority": "high" },
+    body: `${order.drink}${pushSugar} — bring to ${order.tech}'s chair`,
   })
     .then(res => res.ok)
     .catch(() => false);
@@ -177,7 +176,6 @@ submitBtn.addEventListener("click", async () => {
   submitBtn.textContent = "Order My Drink";
 
   if (ok) {
-    document.getElementById("done-emoji").textContent = order.emoji;
     document.getElementById("done-title").textContent = "Cheers!";
     const sugarNote = order.sugar ? ` with ${order.sugar} tsp of sugar` : "";
     document.getElementById("done-text").textContent =
@@ -197,7 +195,7 @@ document.getElementById("order-again").addEventListener("click", resetApp);
 
 function resetApp() {
   clearTimeout(resetTimer);
-  order.tech = order.drink = order.temp = order.emoji = order.sugar = null;
+  order.tech = order.drink = order.temp = order.sugar = null;
   document.getElementById("send-error").hidden = true;
   show("screen-staff");
 }

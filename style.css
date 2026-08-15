@@ -177,7 +177,15 @@ html, body {
 .drink-btn:active { transform: scale(0.98); }
 .drink-btn:hover { border-color: var(--gold); }
 
-.drink-emoji { font-size: 26px; line-height: 1; }
+.drink-marker {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+}
+
+.drink-marker--cold { background: #4f8fbd; }
+.drink-marker--hot { background: #c45d5d; }
 
 /* ---------- Confirm ---------- */
 .summary-card {
@@ -189,7 +197,14 @@ html, body {
   margin-bottom: 22px;
 }
 
-.summary-emoji { font-size: 54px; }
+.decorative-divider {
+  width: 48px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--gold);
+}
+
+.summary-divider { margin: 0 auto 14px; }
 
 .summary-drink {
   font-family: "Playfair Display", Georgia, serif;
@@ -277,15 +292,7 @@ html, body {
 /* ---------- Done ---------- */
 #screen-done { text-align: center; padding-top: 12px; }
 
-.done-emoji {
-  font-size: 74px;
-  animation: pop 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
-}
-
-@keyframes pop {
-  from { transform: scale(0.3); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
+.done-divider { margin: 0 auto 18px; }
 
 .done-text {
   font-size: 17px;
