@@ -20,7 +20,7 @@ const STAFF = [
   { name: "Natalia", title: "Top Master Educator", photo: "img/natalia.jpg" },
   { name: "Anna",    title: "Junior Tech",         photo: "img/anna.jpg" },
   { name: "Iasmym",  title: "Advance Tech",        photo: "img/iasmym.jpg" },
-  { name: "Christina Summer", title: "Junior Tech", photo: "img/christina-summer.jpg" },
+  { name: "Christina", title: "Junior Tech", photo: "img/christina-summer.jpg" },
 ];
 
 const DRINKS = {
