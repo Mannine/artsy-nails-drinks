@@ -18,7 +18,7 @@ const RESET_AFTER_SECONDS = 90;
 
 const STAFF = [
   { name: "Natalia", title: "Top Master Educator", photo: "img/natalia.jpg" },
-  { name: "Amalia",  title: "Advance Tech",        photo: "img/amalia.jpg" },
+  { name: "Christina Summer", title: "Junior Nail Tech", photo: "img/christina-summer.jpg" },
   { name: "Anna",    title: "Junior Tech",         photo: "img/anna.jpg" },
   { name: "Iasmym",  title: "Advance Tech",        photo: "img/iasmym.jpg" },
 ];
