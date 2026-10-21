@@ -9,7 +9,7 @@ pick a drink, and the salon gets an email with the order.
 ## How it works
 
 1. Guest scans the QR sign ([qr-sign.html](qr-sign.html) — open it and hit Print).
-2. Picks who's doing their nails: Natalia, Christina Summer, Anna, or Iasmym.
+2. Picks who's doing their nails: Natalia, Anna, Iasmym, or Christina Summer.
 3. Picks a cold or hot drink (some drinks ask how many tsp of sugar).
 4. The order arrives as an **instant push notification** via [ntfy.sh](https://ntfy.sh)
    (free, no account). Email notifications via [formsubmit.co](https://formsubmit.co)
