@@ -1,6 +1,7 @@
 // Public connection settings only. Notification credentials belong on the worker.
 const ORDER_ENDPOINT = window.ARTSY_ORDER_CONFIG?.endpoint || "";
 const TURNSTILE_SITE_KEY = window.ARTSY_ORDER_CONFIG?.turnstileSiteKey || "";
+const ORDERING_PAUSED = window.ARTSY_ORDER_CONFIG?.orderingPaused === true;
 const RESET_AFTER_SECONDS = 90;
 
 const STAFF = [
@@ -102,6 +103,7 @@ function buildDrinkList(containerId, temp) {
       }
       document.getElementById("send-error").hidden = true;
       show("screen-confirm");
+      if (ORDERING_PAUSED) showSendError(pausedMessage());
     });
     container.appendChild(btn);
   });
@@ -116,6 +118,7 @@ document.querySelectorAll(".back-btn").forEach(btn => {
 
 // ---------- Step 3: submit ----------
 const submitBtn = document.getElementById('submit-order');
+if (ORDERING_PAUSED) submitBtn.textContent = 'Ask Your Technician';
 let sending = false;
 let turnstileToken = '';
 let visitorId = null;
@@ -156,6 +159,9 @@ function showSendError(message) {
 function fallbackMessage() {
   return `We couldn't send your order automatically. Just let ${order.tech} know you'd like a ${order.drink}.`;
 }
+function pausedMessage() {
+  return `Online ordering is temporarily paused. Please ask ${order.tech} for your ${order.drink}.`;
+}
 async function sendAttempt(attempt, token) {
   const response = await fetch(ORDER_ENDPOINT, {
     method: 'POST', credentials: 'omit',
@@ -169,6 +175,7 @@ async function sendAttempt(attempt, token) {
 submitBtn.addEventListener('click', async () => {
   if (sending) return;
   document.getElementById('send-error').hidden = true;
+  if (ORDERING_PAUSED) { showSendError(pausedMessage()); return; }
   if (!endpointReady() || !storageReady) { showSendError(fallbackMessage()); return; }
   let attempt;
   try { attempt = getAttempt(); } catch { showSendError(fallbackMessage()); return; }
@@ -207,7 +214,7 @@ submitBtn.addEventListener('click', async () => {
 });
 
 window.onloadTurnstileCallback = () => {
-  if (!TURNSTILE_SITE_KEY || !window.turnstile) return;
+  if (ORDERING_PAUSED || !TURNSTILE_SITE_KEY || !window.turnstile) return;
   window.turnstile.render('#turnstile-widget', {
     sitekey:TURNSTILE_SITE_KEY, action:'drink-order', appearance:'interaction-only',
     callback:token=>{turnstileToken=token;},

@@ -6,13 +6,15 @@ Guests scan the existing QR sign, choose their technician and drink, and submit 
 
 The prepared page sends validated order fields to a separate notification worker. The notification destination and provider credentials must never appear in this repository or browser JavaScript. The worker validates the menu, checks the bot token, applies atomic limits, and remembers completed requests so retries do not create duplicate orders.
 
-The only public connection values are the worker HTTPS order endpoint and the Turnstile site key in order-config.js. The browser creates an anonymous local identifier for limits and keeps a pending request identifier in session storage for safe retries. It does not collect guest names or payment details.
+The public connection values are the worker HTTPS order endpoint and the Turnstile site key in order-config.js. The notification topic is a server secret. The browser creates an anonymous local identifier for limits and keeps a pending request identifier in session storage for safe retries. It does not collect guest names or payment details.
 
 ## Release status
 
-This branch is preparation only. Connection values are intentionally empty until the worker, bot configuration and replacement notification route are verified. Empty settings show the existing ask-your-technician fallback. Do not publish the incomplete branch over the working site.
+The security release connects to the replacement worker. Automatic ordering is temporarily paused while the receiving iPhone and desktop are reconnected and delivery is verified. The page directs guests to ask their technician and sends no order requests while orderingPaused is true. The worker also starts paused and independently blocks new orders.
 
-A coordinated release must preserve the existing page and QR URL. Verify the replacement worker in a separate staging environment, configure the public connection values, pass source checks, then coordinate device subscriptions and publication during the approved quiet period. A worker pause does not silence the old direct notification channel; that channel needs its own device cutover.
+Preserve the existing page and QR URL. Before enabling orders, complete real bot verification and device delivery testing, resume the worker, and set orderingPaused to false in a checked release. New orders are accepted daily from 7:00 a.m. until 7:30 p.m. Central. A worker pause does not silence the old notification channel; both receiving devices must unsubscribe from it.
+
+The free notification option uses a long random topic name as a shared secret. Anyone who learns that name can read or publish to it. Account-based provider access control is a separate option; sending credentials alone do not make an unreserved topic private. Never copy a topic name into public code, documentation, screenshots, issue reports or browser responses.
 
 ## Checks
 
